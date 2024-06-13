@@ -1,0 +1,33 @@
+# Dockerfile for VLC VOD
+FROM ubuntu:20.04
+
+# Set environment variables to avoid interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Etc/UTC
+
+# Use a faster mirror
+RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://mirrors.kernel.org/ubuntu/|g' /etc/apt/sources.list
+
+# Install VLC
+RUN apt-get update && apt-get install -y \
+    vlc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create a non-root user
+RUN useradd -m vlcuser
+
+# Copy the VOD configuration and test video
+COPY vod.sdp /vod.sdp
+COPY test.mp4 /test.mp4
+
+# Change ownership to the non-root user
+RUN chown vlcuser:vlcuser /vod.sdp /test.mp4
+
+# Switch to the non-root user
+USER vlcuser
+
+# Expose the VOD port
+EXPOSE 8554 8556
+
+# Command to run VLC VOD
+CMD ["cvlc", "-vvv", "/test.mp4", "--sout", "#rtp{sdp=rtsp://0.0.0.0:8554/vod.sdp}"]

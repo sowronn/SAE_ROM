@@ -1,0 +1,30 @@
+# Dockerfile for Asterisk
+FROM ubuntu:20.04
+
+RUN apt-get update && apt-get install -y \
+    wget \
+    build-essential \
+    libssl-dev \
+    libncurses5-dev \
+    libnewt-dev \
+    libxml2-dev \
+    linux-headers-$(uname -r) \
+    uuid-dev \
+    sqlite3 \
+    libsqlite3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Asterisk
+RUN wget http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-16-current.tar.gz && \
+    tar xzf asterisk-16-current.tar.gz && \
+    cd asterisk-16.* && \
+    ./configure && \
+    make && \
+    make install && \
+    make samples && \
+    make config && \
+    ldconfig
+
+EXPOSE 5060 5061 10000-20000/udp
+
+CMD ["/usr/sbin/asterisk", "-f"]

@@ -1,0 +1,16 @@
+# playbook_vlc_vod.yml
+- hosts: all
+  become: yes
+  tasks:
+    - name: Pull VLC VOD Docker image
+      docker_image:
+        name: vlc_vod
+        build: ./path_to_vlc_dockerfile_directory
+
+    - name: Run VLC VOD container
+      docker_container:
+        name: vlc_vod
+        image: vlc_vod
+        state: started
+        ports:
+          - "8554:8554"
