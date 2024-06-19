@@ -1,0 +1,15 @@
+[routers]
+IOU1 ansible_host=10.2.20.1
+IOU2 ansible_host=10.2.30.1
+IOU3 ansible_host=10.2.40.1
+IOU4 ansible_host=10.2.50.1
+IOU5 ansible_host=10.2.60.1
+IOU6 ansible_host=10.2.70.1
+IOU7 ansible_host=10.2.80.1
+IOU8 ansible_host=10.2.90.1
+
+[all:vars]
+ansible_connection=network_cli
+ansible_network_os=ios
+ansible_user=admin
+ansible_password=toto

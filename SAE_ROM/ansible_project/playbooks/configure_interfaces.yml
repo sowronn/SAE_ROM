@@ -1,0 +1,60 @@
+---
+- name: Configure router interfaces
+  hosts: routers
+  gather_facts: no
+  tasks:
+    - name: Configure interface for IOU1
+      when: inventory_hostname == 'IOU1'
+      ios_config:
+        lines:
+          - interface Ethernet0/2
+          - ip address 10.2.20.1 255.255.255.0
+
+    - name: Configure interface for IOU2
+      when: inventory_hostname == 'IOU2'
+      ios_config:
+        lines:
+          - interface Ethernet0/1
+          - ip address 10.2.30.1 255.255.255.0
+
+    - name: Configure interface for IOU3
+      when: inventory_hostname == 'IOU3'
+      ios_config:
+        lines:
+          - interface Ethernet0/3
+          - ip address 10.2.40.1 255.255.255.0
+
+    - name: Configure interface for IOU4
+      when: inventory_hostname == 'IOU4'
+      ios_config:
+        lines:
+          - interface Ethernet1/0
+          - ip address 10.2.50.1 255.255.255.0
+
+    - name: Configure interface for IOU5
+      when: inventory_hostname == 'IOU5'
+      ios_config:
+        lines:
+          - interface Ethernet0/3
+          - ip address 10.2.60.1 255.255.255.0
+
+    - name: Configure interface for IOU6
+      when: inventory_hostname == 'IOU6'
+      ios_config:
+        lines:
+          - interface Ethernet1/0
+          - ip address 10.2.70.1 255.255.255.0
+
+    - name: Configure interface for IOU7
+      when: inventory_hostname == 'IOU7'
+      ios_config:
+        lines:
+          - interface Ethernet0/3
+          - ip address 10.2.80.1 255.255.255.0
+
+    - name: Configure interface for IOU8
+      when: inventory_hostname == 'IOU8'
+      ios_config:
+        lines:
+          - interface Ethernet0/1
+          - ip address 10.2.90.1 255.255.255.0
